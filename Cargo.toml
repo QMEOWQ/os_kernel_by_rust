@@ -1,0 +1,46 @@
+# in Cargo.toml
+
+[package]
+name = "os_by_rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+# abort stack unwinding on panic
+
+[profile.dev] #对应cargo build命令
+
+
+[profile.release] #对应cargo build --release命令
+
+
+[dependencies]
+bootloader = "0.9"
+volatile = "0.2.6" 
+spin = "0.5.2"
+x86_64 = "0.14.2"
+uart_16550 = "0.2.0"
+pic8259 = "0.10.1"
+pc-keyboard = "0.7.0" # 键盘驱动
+
+[dependencies.lazy_static]
+version = "1.0"
+features = ["spin_no_std"]
+
+[package.metadata.bootimage]
+test-args = [
+    "-device", "isa-debug-exit, iobase=0xf4, iosize=0x04", "-serial", "stdio",
+    "-display", "none"
+]
+test-success-exit-code = 33 # (0x10 << 1) | 1
+test-timeout = 10 # (in seconds)
+
+[[test]]
+name = "should_panic"
+harness = false # 对于只有单个测试函数的集成测试而言,其实并不需要test runner,使用此方法禁用
+
+[[test]]
+name = "stack_overflow"
+harness = false # 进行无约束测试
+
