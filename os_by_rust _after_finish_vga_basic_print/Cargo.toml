@@ -1,0 +1,25 @@
+# in Cargo.toml
+
+[package]
+name = "os_by_rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+# abort stack unwinding on panic
+
+[profile.dev] #对应cargo build命令
+panic = "abort"
+
+[profile.release] #对应cargo build --release命令
+panic = "abort"
+
+[dependencies]
+bootloader = "0.9"
+volatile = "0.2.6" 
+spin = "0.5.2"
+
+[dependencies.lazy_static]
+version = "1.0"
+features = ["spin_no_std"]
