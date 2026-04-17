@@ -1,0 +1,8 @@
+/target
+**/target
+*.pdb
+Thumbs.db
+.DS_Store
+.cursor/
+.vscode/
+.idea/
